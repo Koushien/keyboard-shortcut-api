@@ -1,0 +1,132 @@
+[
+  {
+    "namespace": "keyboard_shortcut",
+    "permissions": ["experiments.keyboard_shortcut"],
+    "functions": [
+      {
+        "name": "navigationBack",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "navigationForward",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "navigationHome",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "navigationOpenFile",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "navigationReload",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "navigationReloadOverrideCache",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "navigationStop",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "pageGoDownAScreen",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageGoUpAScreen",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageGoToBottomOfPage",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageGoToTopOfPage",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageMovetoNextFrame",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageMoveToPreviousFrame",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pagePrint",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageSavePageAs",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageZoomIn",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageZoomOut",
+        "type": "function",
+        "async": true,
+        "parameters": []
+
+      },
+      {
+        "name": "pageZoomReset",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "selectLocationBar",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      }
+    ]
+  }
+]
