@@ -60,21 +60,21 @@
 
       },
       {
-        "name": "pageGoToBottomOfPage",
+        "name": "pageGoToBottom",
         "type": "function",
         "async": true,
         "parameters": []
 
       },
       {
-        "name": "pageGoToTopOfPage",
+        "name": "pageGoToTop",
         "type": "function",
         "async": true,
         "parameters": []
 
       },
       {
-        "name": "pageMovetoNextFrame",
+        "name": "pageMoveToNextFrame",
         "type": "function",
         "async": true,
         "parameters": []
@@ -95,7 +95,7 @@
 
       },
       {
-        "name": "pageSavePageAs",
+        "name": "pageSaveAs",
         "type": "function",
         "async": true,
         "parameters": []
@@ -114,6 +114,12 @@
         "async": true,
         "parameters": []
 
+      },
+      {
+        "name": "pageZoomReset",
+        "type": "function",
+        "async": true,
+        "parameters": []
       },
       {
         "name": "pageZoomReset",

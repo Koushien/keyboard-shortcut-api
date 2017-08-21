@@ -53,79 +53,72 @@ class API extends ExtensionAPI {
         // CURRENT PAGE SHORTCUTS
         // goDownAScreen
         pageGoDownAScreen() {
-          // standard
-          // approach 1: get size of screen, scroll exactly by size
-          // non-standard, .scrollByPages
+          // http://searchfox.org/mozilla-central/source/dom/xbl/builtin/mac/platformHTMLBindings.xml
+          // along those lines, as in browser.js:2115
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.scrollByPages(1);
+          window.goDoCommand("cmd_scrollPageDown");
         },
         // goUpAScreen
         pageGoUpAScreen() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.scrollByPages(-1);
+          window.goDoCommand("cmd_scrollPageUp");
         },
 
         // goToBottomOfPage
-        pageGoToBottomOfPage() {
+        pageGoToBottom() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.scroll(window.scrollX, window.scrollMaxY);
+          window.goDoCommand("cmd_scrollBottom");
         },
         // goToTopOfPage
-        pageGoToTopOfPage() {
+        pageGoToTop() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.scroll(window.scrollX, 0);
+          window.goDoCommand("cmd_scrollTop");
         },
         // moveToNextFrame
         pageMoveToNextFrame() {
-          // Q: How would we identify current frame?
-          // Ideally, we would be able to advance frame +1
-          // and the browser would take the modulus of |frames|
+          // EventStateManager.cpp:~2930
+          const fm = nsIFocusManager;
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          const frames = window.frames;
-          // get current frame i in frames
-          // do frames[(i + 1) % frames.length]
+          fm.moveFocus(window, null, fm.MOVEFOCUS_FORWARDDOC, fm.FLAG_BYKEY);
         },
         // moveToPreviousFrame
         pageMoveToPreviousFrame() {
+          const fm = nsIFocusManager;
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          const frames = window.frames
-          // as above, frames[(i - 1) % frames.length]
+          fm.moveFocus(window, null, fm.MOVEFOCUS_BACKWARDDOC, fm.FLAG_BYKEY);
         },
         // print
         pagePrint() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.print();
-          // browser.js:2066
-          PrintUtils.printWindow(gBrowser.selectedBrowser.outerWindowID,
-                                 gBrowser.selectedBrowser);
+          // ext-tabs.js:~771
+          // PrintUtils.printWindow(getTabOrActive(null).linkedBrowser.outerWindowID,
+          //                        getTabOrActive.linkedBrowser);
+          // browser.js:~2066
+          // Not the same as ctrl+p (why?), this is equivalent to menu -> print
+          window.PrintUtils.printWindow(window.gBrowser.selectedBrowser.outerWindowID,
+                                        window.gBrowser.selectedBrowser);
         },
         // savePageAs
-        pageSavePageAs() {
+        pageSaveAs() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          filePicker.init(window, null, modeSave);
-          filePicker.open(function() {
-            // callback that saves
-          });
-          // browser.js:2070
-          saveBrowser(gBrowser.selectedBrowser);
+          // browser.js:~2070
+          window.saveBrowser(window.gBrowser.selectedBrowser);
         },
         // zoomIn
         pageZoomIn() {
-          // do I need to clamp manually here?
-          tabs.setZoom({
-            zoomFactor: tabs.getZoom() + tabs.getZoomSettings().defaultZoomFactor
-          },)
+          // browser-sets.inc:~85
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.FullZoom.enlarge();
         },
         // zoomOut
         pageZoomOut() {
-          // see above
-          tabs.setZoom({
-            zoomFactor: tabs.getZoom() - tabs.getZoomSettings().defaultZoomFactor
-          },)
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.FullZoom.reduce();
         },
         // zoomReset
         pageZoomReset() {
-          tabs.setZoom();
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.FullZoom.reset();
         },
 
         // EDITING SHORTCUTS
