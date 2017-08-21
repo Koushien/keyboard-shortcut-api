@@ -7,21 +7,20 @@
  *
  */
 var {classes: Cc, interfaces: Ci, utils: Cu} = Components
-const nsIWindowMediator = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
-const filePicker = Cc["@mozilla.org/filepicker;1"].createInstance(Components.interfaces.nsIFilePicker);
+const nsIWindowMediator = Cc['@mozilla.org/appshell/window-mediator;1']
+  .getService(Ci.nsIWindowMediator);
+const nsIFocusManager = Cc["@mozilla.org/focus-manager;1"]
+  .getService(Ci.nsIFocusManager);
 const debugging = Cu.import('resource://gre/modules/Console.jsm');
 
 class API extends ExtensionAPI {
   getAPI(context) {
     return {
-      // Insert Experiment API here.
-      // Note: the namespace (boilerplate must match the id in the install.rdf)
       keyboard_shortcut: {
         // NAVIGATION SHORTCUTS
         navigationBack() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          // window.history.back();
           // browser.js:~1985
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.BrowserBack();
         },
         navigationForward() {
@@ -33,11 +32,6 @@ class API extends ExtensionAPI {
           window.BrowserHome();
         },
         navigationOpenFile() {
-          // const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          // filePicker.init(window, null, modeOpen);
-          // filePicker.open(function() {
-          //   // callback that opens as a new tab in window
-          // });
           // browser.js:2063
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.BrowserOpenFileWindow()
@@ -352,7 +346,7 @@ class API extends ExtensionAPI {
           // it is likely most straight forward to prefix and open
           // however there may be mechanisms to get the source from current page
           // (opening the page itself might create a new request)
-          // browser.js:2180 Bug 1167797: For view source, we always skip the cache on RELOADS
+          // browser.js:2180 Bug 1167797: For view source, always skip cache on RELOADS
         },
 
         // browserConsole
@@ -377,7 +371,6 @@ class API extends ExtensionAPI {
         // selectLocationBar
         selectLocationBar: function() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          // do we get this call for free?
           // it is undocumented on MDN, but is defined in browser.js:2263
           // called in the same manner as below in ext-tabs.js:385
           window.focusAndSelectUrlBar();
