@@ -124,39 +124,46 @@ class API extends ExtensionAPI {
         // EDITING SHORTCUTS
         // copy
         editCopy() {
-          Edit.execCommand('copy');
+          // as noted in editMenuOverlay.xul
+          //   <!-- These key nodes are here only for show. The real bindings
+          //   come from XBL, in platformHTMLBindings.xml. See bugs 57078 and 71779. -->
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_copy");
         },
         // cut
         editCut() {
-          Edit.execCommand('cut');
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_cut");
         },
         // delete
         editDelete() {
-          Edit.execCommand('delete');
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_delete");
         },
         // paste
         editPaste() {
-          Edit.execCommand('paste');
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_paste");
         },
         // pasteAsPlainText
         editPasteAsPlainText() {
-          // include a preprocessor to paste as plain text
-          // i.e., remove formatting
-          Edit.execCommand('paste', function() {
-            // regex calls to remove processing
-          })
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_pasteNoFormatting");
         },
         // redo
         editRedo() {
-          Edit.execCommand('redo');
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_redo");
         },
         // selectAll
         editSelectAll() {
-          Edit.execCommand('selectAll');
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_selectAll");
         },
         // undo
         editUndo() {
-          Edit.execCommand('undo');
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.goDoCommand("cmd_undo");
         },
 
         // SEARCH SHORTCUTS
