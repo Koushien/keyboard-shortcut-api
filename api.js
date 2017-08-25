@@ -168,27 +168,40 @@ class API extends ExtensionAPI {
 
         // SEARCH SHORTCUTS
         // find
-        searchFind(target) {
-          // search.find() is non-standard
-          // and generally seen as substandard
-          // https://bugzilla.mozilla.org/show_bug.cgi?id=672395
-          // full object parameters
-          // https://developer.mozilla.org/en-US/docs/Web/API/search/find
-
-          // if we can't get this implemented, consider regex on DOM contents
+        searchFind() {
+          // browser-sets.inc:~48 and findbar.xml
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gFindBar.onFindCommand();
         },
         // findAgain
         searchFindAgain() {
-          // consider binding this to previous find
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gFindBar.onFindAgainCommand(false);
         },
         // findPrevious
         searchFindPrevious() {
-          // window.find does have a "aBackwards" flag,
-          // but overall not very useful to us
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gFindBar.onFindAgainCommand(true);
         },
         // quickFindLinksOnly
+        searchQuickFindLinksOnly() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          // The clear() mimics native shortcut behavior,
+          // but doesn't autofill highlighted text which could be useful
+          window.gFindBar.clear();
+          window.gFindBar.startFind(window.gFindBar.FIND_LINKS);
+        },
         // quickFind
+        searchQuickFind() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gFindBar.clear();
+          window.gFindBar.startFind(gFindBar.FIND_TYPEAHEAD);
+        },
         // closeFind
+        searchCloseFind() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gFindBar.close();
+        },
 
         // WINDOWS & TABS SHORTCUTS
         // closeTab

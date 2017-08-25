@@ -2,7 +2,7 @@ function createButton(context, func, name, timeout = 0) {
   var button = document.createElement("input");
   button.type = "button";
   button.value = name;
-  button.onclick = (timeout > 0) 
+  button.onclick = (timeout > 0)
     ? () => { document.getElementById("lorem").focus(); window.setTimeout(() => { func() }, timeout) }
     : () => { func() };
   context.appendChild(button);
@@ -19,8 +19,8 @@ window.onload = function() {
       category = temp;
       document.body.appendChild(document.createElement("br"));
     }
-    if (category === "edit") timeout = 2000; // also have it autofocus the textarea
-    createButton(document.body, browser.keyboard_shortcut[fun], fun, timeout);
+  if (category === "edit") timeout = 2000; // also have it autofocus the textarea
+  createButton(document.body, browser.keyboard_shortcut[fun], fun, timeout);
   };
   document.body.appendChild(document.createElement("br"));
   var textbox = document.createElement("textarea");

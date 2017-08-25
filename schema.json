@@ -176,6 +176,42 @@
         "parameters": []
       },
       {
+        "name": "searchFind",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "searchFindAgain",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "searchFindPrevious",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "searchQuickFindLinksOnly",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "searchQuickFind",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "searchCloseFind",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
         "name": "selectLocationBar",
         "type": "function",
         "async": true,
