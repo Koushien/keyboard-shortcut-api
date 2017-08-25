@@ -195,7 +195,7 @@ class API extends ExtensionAPI {
         searchQuickFind() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.gFindBar.clear();
-          window.gFindBar.startFind(gFindBar.FIND_TYPEAHEAD);
+          window.gFindBar.startFind(window.gFindBar.FIND_TYPEAHEAD);
         },
         // closeFind
         searchCloseFind() {
