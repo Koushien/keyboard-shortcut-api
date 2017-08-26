@@ -51,78 +51,62 @@ class API extends ExtensionAPI {
         },
 
         // CURRENT PAGE SHORTCUTS
-        // goDownAScreen
         pageGoDownAScreen() {
           // http://searchfox.org/mozilla-central/source/dom/xbl/builtin/mac/platformHTMLBindings.xml
           // along those lines, as in browser.js:2115
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_scrollPageDown");
         },
-        // goUpAScreen
         pageGoUpAScreen() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_scrollPageUp");
         },
 
-        // goToBottomOfPage
         pageGoToBottom() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_scrollBottom");
         },
-        // goToTopOfPage
         pageGoToTop() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_scrollTop");
         },
-        // moveToNextFrame
         pageMoveToNextFrame() {
           // EventStateManager.cpp:~2930
           const fm = nsIFocusManager;
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           fm.moveFocus(window, null, fm.MOVEFOCUS_FORWARDDOC, fm.FLAG_BYKEY);
         },
-        // moveToPreviousFrame
         pageMoveToPreviousFrame() {
           const fm = nsIFocusManager;
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           fm.moveFocus(window, null, fm.MOVEFOCUS_BACKWARDDOC, fm.FLAG_BYKEY);
         },
-        // print
         pagePrint() {
+          // browser.js:~2066 and browser-sets.inc:~32
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          // ext-tabs.js:~771
-          // PrintUtils.printWindow(getTabOrActive(null).linkedBrowser.outerWindowID,
-          //                        getTabOrActive.linkedBrowser);
-          // browser.js:~2066
-          // Not the same as ctrl+p (why?), this is equivalent to menu -> print
           window.PrintUtils.printWindow(window.gBrowser.selectedBrowser.outerWindowID,
                                         window.gBrowser.selectedBrowser);
         },
-        // savePageAs
         pageSaveAs() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           // browser.js:~2070
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.saveBrowser(window.gBrowser.selectedBrowser);
         },
-        // zoomIn
         pageZoomIn() {
           // browser-sets.inc:~85
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.FullZoom.enlarge();
         },
-        // zoomOut
         pageZoomOut() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.FullZoom.reduce();
         },
-        // zoomReset
         pageZoomReset() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.FullZoom.reset();
         },
 
         // EDITING SHORTCUTS
-        // copy
         editCopy() {
           // as noted in editMenuOverlay.xul
           //   <!-- These key nodes are here only for show. The real bindings
@@ -130,60 +114,49 @@ class API extends ExtensionAPI {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_copy");
         },
-        // cut
         editCut() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_cut");
         },
-        // delete
         editDelete() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_delete");
         },
-        // paste
         editPaste() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_paste");
         },
-        // pasteAsPlainText
         editPasteAsPlainText() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_pasteNoFormatting");
         },
-        // redo
         editRedo() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_redo");
         },
-        // selectAll
         editSelectAll() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_selectAll");
         },
-        // undo
         editUndo() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.goDoCommand("cmd_undo");
         },
 
         // SEARCH SHORTCUTS
-        // find
         searchFind() {
           // browser-sets.inc:~48 and findbar.xml
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.gFindBar.onFindCommand();
         },
-        // findAgain
         searchFindAgain() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.gFindBar.onFindAgainCommand(false);
         },
-        // findPrevious
         searchFindPrevious() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.gFindBar.onFindAgainCommand(true);
         },
-        // quickFindLinksOnly
         searchQuickFindLinksOnly() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           // The clear() mimics native shortcut behavior,
@@ -191,13 +164,11 @@ class API extends ExtensionAPI {
           window.gFindBar.clear();
           window.gFindBar.startFind(window.gFindBar.FIND_LINKS);
         },
-        // quickFind
         searchQuickFind() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.gFindBar.clear();
           window.gFindBar.startFind(window.gFindBar.FIND_TYPEAHEAD);
         },
-        // closeFind
         searchCloseFind() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.gFindBar.close();
