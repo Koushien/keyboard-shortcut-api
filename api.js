@@ -268,37 +268,38 @@ class API extends ExtensionAPI {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.undoCloseWindow();
         },
-        // selectTab8
-        tabsSelectTab8() {
-          tabs.update(tabs.query({ index: 8 })[0].tab.id, { active: true });
+
+        // HISTORY
+        historySidebar() {
+          // browser-sets.inc:131
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.SidebarUI.toggle('viewHistorySidebar');
         },
-        // selectLastTab
-        tabsSelectLastTab() {
-          // Is there a better way to get the number of tabs in a window?
-          allTabs = tabs.query({ currentWindow: true });
-          tabs.update(allTabs[allTabs.length - 1].tab.id, { active: true });
+        historyLibraryWindow() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.PlacesCommandHook.showPlacesOrganizer('History');
+        },
+        historyClearRecent() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          Cc['@mozilla.org/browser/browserglue;1']
+            .getService(Ci.nsIBrowserGlue).sanitize(window);
         },
 
-        // undoCloseTab
-        // undoCloseWindow
-
-        // historySidebar
-        // bookmarksSidebar
-        // possibly relevant:
-        // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Sidebars
-
-        // libraryWindowHistory
-        // clearRecentHistory
-
-        // bookmarkThisPage
-        bookmarksBookMarkThisPage() {
-          // get name, location of current window
-          browser.bookmarks.create({
-            title: window.name,
-            url: window.location
-          },)
+        // BOOKMARKS
+        bookmarksThisPage() {
+          // browser-sets.inc:60
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.PlacesCommandHook.bookmarkCurrentPage(
+            true, window.PlacesUtils.bookmarksMenuFolderId);
         },
-        // libraryWindowBookmarks
+        bookmarksSidebar() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.SidebarUI.toggle('viewBookmarksSidebar');
+        },
+        bookmarksLibraryWindow() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.PlacesCommandHook.showPlacesOrganizer('UnfiledBookmarks');
+        },
 
         // downloads
         tabsDownloads() {
