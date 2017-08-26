@@ -8,7 +8,10 @@
 
   "permissions": [ "experiments.keyboard_shortcut" ],
 
-  "browser_action": { "default_title": "Keyboard Shortcut Tester" },
+  "browser_action": {
+    "default_title": "Keyboard Shortcut Tester",
+    "browser_style": true
+  },
 
   "applications": {
     "gecko": { "id": "keyboard_shortcut_tester@example.org" }
