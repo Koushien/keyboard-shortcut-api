@@ -212,66 +212,6 @@
         "parameters": []
       },
       {
-        "name": "tabClose",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabMoveLeft",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabMoveRight",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabMoveToStart",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabMoveToEnd",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabToggleMute",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabNew",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabNext",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabPrevious",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
-        "name": "tabUndoClose",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
         "name": "windowUndoClose",
         "type": "function",
         "async": true,
