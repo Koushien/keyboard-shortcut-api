@@ -237,9 +237,11 @@ class API extends ExtensionAPI {
           // get id of previous tab
           tabs.update(id, { active: true });
         },
-        // selectTab1
-        tabsSelectTab1() {
-          tabs.update(tabs.query({ index: 1 })[0].tab.id, { active: true });
+        // undoCloseTab
+        tabUndoClose() {
+          // browser-sets.inc:109
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.undoCloseTab();
         },
         // selectTab2
         tabsSelectTab2() {
@@ -261,9 +263,10 @@ class API extends ExtensionAPI {
         tabsSelectTab6() {
           tabs.update(tabs.query({ index: 6 })[0].tab.id, { active: true });
         },
-        // selectTab7
-        tabsSelectTab7() {
-          tabs.update(tabs.query({ index: 7 })[0].tab.id, { active: true });
+        // undoCloseWindow
+        windowUndoClose() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.undoCloseWindow();
         },
         // selectTab8
         tabsSelectTab8() {
