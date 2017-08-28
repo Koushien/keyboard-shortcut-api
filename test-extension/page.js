@@ -1,3 +1,4 @@
+"use strict";
 function createButton(context, func, name, timeout = 0) {
   var button = document.createElement("input");
   button.type = "button";
