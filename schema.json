@@ -260,6 +260,96 @@
         "parameters": []
       },
       {
+        "name": "toolsDownloads",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsAddons",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsToggleDeveloper",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsWebConsole",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsInspector",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsDebugger",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsStyleEditor",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsProfiler",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsNetwork",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsDeveloperToolbar",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsResponsiveDesignView",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsPageSource",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsBrowserConsole",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsPageInfo",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toolsScratchpad",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
         "name": "selectLocationBar",
         "type": "function",
         "async": true,

@@ -301,44 +301,89 @@ class API extends ExtensionAPI {
           window.PlacesCommandHook.showPlacesOrganizer('UnfiledBookmarks');
         },
 
+        // TOOLS
         // downloads
-        tabsDownloads() {
-          // read tabsAddons below
-          tabs.create({ url: 'about:downloads' });
+        toolsDownloads() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserDownloadsUI();
         },
         // addons
-        tabsAddons() {
-          // open about:addons in new tab
-          // since about:addons is a privileged URL, we cannot open it this way
-          // granting such permission in web extensions is being discussed in
-          // https://bugzilla.mozilla.org/show_bug.cgi?id=1269456
-          // if needed, we can try manually constructing a URL object
-          // https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
-          tabs.create({ url: 'about:addons' });
+        toolsAddons() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserOpenAddonsMgr();
         },
-
         // toggleDeveloperTools
+        toolsToggleDeveloper() {
+          // devtools-browser.js:267
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          // gDevToolsBrowser.onKeyShortcut not exposed in Nightly 57.0a1
+          window.gDevToolsBrowser.toggleToolboxCommand(window.gBrowser);
+        },
         // webConsole
+        toolsWebConsole() {
+          // panels from DevTools.jsm:26
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "webconsole");
+        },
         // inspector
+        toolsInspector() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "inspector");
+        },
         // debugger
+        toolsDebugger() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "jsdebugger");
+        },
         // styleEditor
+        toolsStyleEditor() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "styleeditor");
+        },
         // profiler
+        toolsProfiler() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "performance");
+        },
         // network
+        toolsNetwork() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "netmonitor");
+        },
+        // undocumented shortcut for "storage" => shift+f9
         // developerToolbar
+        toolsDeveloperToolbar() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          // gDevToolsBrowser.getDeveloperToolbar not exposed in Nightly 57.0a1
+        },
         // responsiveDesignView
+        toolsResponsiveDesignView() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.ResponsiveUI.ResponsiveUIManager.toggle(window,
+                                                         window.gBrowser.selectedTab);
+        },
         // scratchpad
-
+        toolsScratchpad() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.Scratchpad.ScratchpadManager.openScratchpad();
+        },
         // pageSource
         toolsPageSource() {
-          // opens view-source:#CURRENTURL in new tab
-          // it is likely most straight forward to prefix and open
-          // however there may be mechanisms to get the source from current page
-          // (opening the page itself might create a new request)
-          // browser.js:2180 Bug 1167797: For view source, always skip cache on RELOADS
+          // browser-sets.inc:43 Observes "canViewSource"
+          // Do we need to set our own observer?
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserViewSource(window.gBrowser.selectedBrowser);
         },
-
         // browserConsole
+        toolsBrowserConsole() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.HUDService.openBrowserConsoleOrFocus();
+        },
         // pageInfo
+        toolsPageInfo() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserPageInfo();
+        },
 
         // MISC SHORTCUTS
         // toggleFullScreen
