@@ -13,6 +13,15 @@ const nsIFocusManager = Cc["@mozilla.org/focus-manager;1"]
   .getService(Ci.nsIFocusManager);
 const debugging = Cu.import('resource://gre/modules/Console.jsm');
 
+// GENERATORS
+// panels from DevTools.jsm:26
+function devTools(panel) {
+  return function() {
+    const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+    window.gDevToolsBrowser.selectToolCommand(window.gBrowser, panel);
+  }
+}
+
 class API extends ExtensionAPI {
   getAPI(context) {
     return {
@@ -319,39 +328,13 @@ class API extends ExtensionAPI {
           // gDevToolsBrowser.onKeyShortcut not exposed in Nightly 57.0a1
           window.gDevToolsBrowser.toggleToolboxCommand(window.gBrowser);
         },
-        // webConsole
-        toolsWebConsole() {
-          // panels from DevTools.jsm:26
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "webconsole");
-        },
-        // inspector
-        toolsInspector() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "inspector");
-        },
-        // debugger
-        toolsDebugger() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "jsdebugger");
-        },
-        // styleEditor
-        toolsStyleEditor() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "styleeditor");
-        },
-        // profiler
-        toolsProfiler() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "performance");
-        },
-        // network
-        toolsNetwork() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.gDevToolsBrowser.selectToolCommand(window.gBrowser, "netmonitor");
-        },
-        // undocumented shortcut for "storage" => shift+f9
-        // developerToolbar
+        toolsWebConsole: devTools("webconsole"),
+        toolsInspector: devTools("inspector"),
+        toolsDebugger: devTools("jsdebugger"),
+        toolsStyleEditor: devTools("styleeditor"),
+        toolsProfiler: devTools("performance"),
+        toolsNetwork: devTools("netmonitor"),
+        // toolsStorage: devTools("storage"); undocumented shortcut (shift+F9)
         toolsDeveloperToolbar() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           // gDevToolsBrowser.getDeveloperToolbar not exposed in Nightly 57.0a1
