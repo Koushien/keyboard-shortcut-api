@@ -386,22 +386,76 @@ class API extends ExtensionAPI {
         },
 
         // MISC SHORTCUTS
-        // toggleFullScreen
         toggleFullScreen() {
-          // do we need to set .fullscreen if we resize by any other method?
-          window.fullscreen = !window.fullscreen;
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserFullScreen();
         },
         // toggleMenuBar
         toggleMenuBar() {
           // window.menubar is read-only
         },
-        // toggleReaderMode
         toggleReaderMode() {
-          // like view-source, just prefix with about:reader?url=
-          // inspect enterReaderMode in resource://gre/modules/ReaderMode.jsm
+          // browser-sets.inc:46
+          // Add a non-null document for readermode to parse
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.selectedBrowser.messageManager
+            .sendAsyncMessage("Reader:ToggleReaderMode");
         },
-        // caretBrowsing
-        // selectLocationBar
+        toggleCaretBrowsing() {
+          // Adapted directly from browser.xml:1605
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          const mPrefs = Cc["@mozilla.org/preferences-service;1"]
+            .getService(Ci.nsIPrefBranch);
+          const mStrBundle = Cc["@mozilla.org/intl/stringbundle;1"]
+            .getService(Ci.nsIStringBundleService)
+            .createBundle("chrome://global/locale/browser.properties");
+          const kPrefShortcutEnabled = "accessibility.browsewithcaret_shortcut.enabled";
+          const kPrefWarnOnEnable    = "accessibility.warn_on_browsewithcaret";
+          const kPrefCaretBrowsingOn = "accessibility.browsewithcaret";
+
+          var isEnabled = mPrefs.getBoolPref(kPrefShortcutEnabled);
+          if (!isEnabled)
+            return;
+
+          // Toggle browse with caret mode
+          var browseWithCaretOn = mPrefs.getBoolPref(kPrefCaretBrowsingOn, false);
+          var warn = mPrefs.getBoolPref(kPrefWarnOnEnable, true);
+          if (warn && !browseWithCaretOn) {
+            var checkValue = {value: false};
+            var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                                          .getService(Components.interfaces.nsIPromptService);
+
+            var buttonPressed = promptService.confirmEx(window,
+              mStrBundle.GetStringFromName("browsewithcaret.checkWindowTitle"),
+              mStrBundle.GetStringFromName("browsewithcaret.checkLabel"),
+              // Make "No" the default:
+              promptService.STD_YES_NO_BUTTONS | promptService.BUTTON_POS_1_DEFAULT,
+              null, null, null, mStrBundle.GetStringFromName("browsewithcaret.checkMsg"),
+              checkValue);
+            if (buttonPressed != 0) {
+              if (checkValue.value) {
+                try {
+                  mPrefs.setBoolPref(kPrefShortcutEnabled, false);
+                } catch (ex) {
+                }
+              }
+              return;
+            }
+            if (checkValue.value) {
+              try {
+                mPrefs.setBoolPref(kPrefWarnOnEnable, false);
+              } catch (ex) {
+              }
+            }
+          }
+
+          // Toggle the pref
+          try {
+            mPrefs.setBoolPref(kPrefCaretBrowsingOn, !browseWithCaretOn);
+          } catch (ex) {
+          }
+
+        },
         selectLocationBar: function() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           // it is undocumented on MDN, but is defined in browser.js:2263

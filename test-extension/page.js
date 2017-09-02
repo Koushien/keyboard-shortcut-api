@@ -15,13 +15,23 @@ window.onload = function() {
   var shortcuts = Object.getOwnPropertyNames(browser.keyboard_shortcut);
   var category = "";
   for (var i = 0; i < shortcuts.length; i++) {
-    let fun = shortcuts[i].toString(), temp, timeout;
-    if ((temp = fun.match(/^[a-z]+/)[0]) !== category) {
+    let name = shortcuts[i].toString(), func = browser.keyboard_shortcut[name];
+    let temp, timeout;
+    if ((temp = name.match(/^[a-z]+/)[0]) !== category) {
       category = temp;
       document.body.appendChild(document.createElement("br"));
     }
-  if (category === "edit") timeout = 2000; // also have it autofocus the textarea
-  createButton(document.body, browser.keyboard_shortcut[fun], fun, timeout);
+    if (category === "edit") timeout = 2000;
+    if (name === "toggleReaderMode") {
+      func = () => {
+        const url = prompt("URL (complete with scheme) to read.", "https://mozilla.org");
+        if (url) {
+           const tab = browser.tabs.create({'url':url});
+           tab.then(window.setTimeout(() => { browser.keyboard_shortcut[name]() }, 4000));
+        }
+      }
+    }
+    createButton(document.body, func, name, timeout);
   };
   document.body.appendChild(document.createElement("br"));
   var textbox = document.createElement("textarea");

@@ -350,6 +350,30 @@
         "parameters": []
       },
       {
+        "name": "toggleFullScreen",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toggleMenuBar",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toggleReaderMode",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "toggleCaretBrowsing",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
         "name": "selectLocationBar",
         "type": "function",
         "async": true,
