@@ -311,17 +311,14 @@ class API extends ExtensionAPI {
         },
 
         // TOOLS
-        // downloads
         toolsDownloads() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.BrowserDownloadsUI();
         },
-        // addons
         toolsAddons() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.BrowserOpenAddonsMgr();
         },
-        // toggleDeveloperTools
         toolsToggleDeveloper() {
           // devtools-browser.js:267
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
@@ -339,30 +336,25 @@ class API extends ExtensionAPI {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           // gDevToolsBrowser.getDeveloperToolbar not exposed in Nightly 57.0a1
         },
-        // responsiveDesignView
         toolsResponsiveDesignView() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.ResponsiveUI.ResponsiveUIManager.toggle(window,
                                                          window.gBrowser.selectedTab);
         },
-        // scratchpad
         toolsScratchpad() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.Scratchpad.ScratchpadManager.openScratchpad();
         },
-        // pageSource
         toolsPageSource() {
           // browser-sets.inc:43 Observes "canViewSource"
           // Do we need to set our own observer?
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.BrowserViewSource(window.gBrowser.selectedBrowser);
         },
-        // browserConsole
         toolsBrowserConsole() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.HUDService.openBrowserConsoleOrFocus();
         },
-        // pageInfo
         toolsPageInfo() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.BrowserPageInfo();
