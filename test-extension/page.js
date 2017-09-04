@@ -22,7 +22,16 @@ window.onload = function() {
       document.body.appendChild(document.createElement("br"));
     }
     if (category === "edit") timeout = 2000;
-    if (name === "toggleReaderMode") {
+    else if (name === "tabSelect") {
+      for (var j = 1; j < 9; j++) {
+        createButton(document.body,
+                     () => { func.call(this, j) },
+                     name + j,
+                     timeout);
+      }
+      continue;
+    }
+    else if (name === "toggleReaderMode") {
       func = () => {
         const url = prompt("URL (complete with scheme) to read.", "https://mozilla.org");
         if (url) {

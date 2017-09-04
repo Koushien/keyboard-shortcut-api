@@ -184,95 +184,70 @@ class API extends ExtensionAPI {
         },
 
         // WINDOWS & TABS SHORTCUTS
-        // closeTab
-        tabCloseTab() {
-          // option 1: get current tab id, tabs.close(id);
-          // tabs.getSelected() is deprecated but stated to work
-          // tabs.getCurrent() is async and standardized
+        tabClose() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserCloseTabOrWindow();
         },
-        // closeWindow
-        windowCloseWindow() {
-          window.close();
+        tabMoveLeft() {
+          // tabbrowser.xml
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.moveTabBackward();
         },
-        // moveLeft
-        tabsMoveLeft() {
-          // get id of current tab
-          // does first tab wrap around to end or stay left?
-          if (id.index == -1) index = tabs.length - 2;
-          tabs.move(id, { index: id.index - 1 });
+        tabMoveRight() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.moveTabForward();
         },
-        // moveRight
-        tabsMoveRight() {
-          // get id of current tab
-          // does last tab wrap around to first or stay at end
-          if (id.index == -1) index = tabs.length - 1;
-          tabs.move(id, { index: id.index - 1 });
+        tabMoveToStart() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.moveTabToStart();
         },
-        // moveToStart
-        tabsMovetoStart() {
-          // get id of current tab
-          tabs.move(id, { index: 0 });
+        tabMoveToEnd() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.moveTabToEnd();
         },
-        // moveToEnd
-        tabsMoveToEnd() {
-          // get id of current tab
-          tabs.move(id, { index: -1 });
+        tabToggleMute() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.selectedTab.toggleMuteAudio();
         },
-        // toggleMute
-        tabsToggleMute() {
-          // get id of current tab
-          // do we need to update reason?
-          tabs.update(id, { muted: true });
+        tabNew() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          // Called without event passed in browser-sets.inc:24
+          window.BrowserOpenTab();
         },
-        // newTab
-        tabsNewTab() {
-          tabs.create();
+        tabNext() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.tabContainer.advanceSelectedTab(1, true);
         },
-        // newWindow
-        windowsNewWindow() {
-          windows.create();
+        tabPrevious() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.tabContainer.advanceSelectedTab(-1, true);
         },
-        // newPrivateWindow
-        windowsNewPrivateWindow() {
-          windows.create({ incognito: true });
-        },
-        // nextTab
-        tabsNextTab() {
-          // get id of next tab
-          tabs.update(id, { active: true });
-        },
-        // previousTab
-        tabsPreviousTab() {
-          // get id of previous tab
-          tabs.update(id, { active: true });
-        },
-        // undoCloseTab
         tabUndoClose() {
-          // browser-sets.inc:109
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.undoCloseTab();
         },
-        // selectTab2
-        tabsSelectTab2() {
-          tabs.update(tabs.query({ index: 2 })[0].tab.id, { active: true });
+        tabSelect(tabNumber) {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          // Called without event passed in Tabs.jsm among other places.
+          // Alternatively, we can use code directly from tabbrowser.xml.
+          window.gBrowser.selectTabAtIndex(tabNumber - 1);
         },
-        // selectTab3
-        tabsSelectTab3() {
-          tabs.update(tabs.query({ index: 3 })[0].tab.id, { active: true });
+        tabSelectLast() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.gBrowser.selectTabAtIndex(-1);
         },
-        // selectTab4
-        tabsSelectTab4() {
-          tabs.update(tabs.query({ index: 4 })[0].tab.id, { active: true });
+        windowClose() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.BrowserTryToCloseWindow();
         },
-        // selectTab5
-        tabsSelectTab5() {
-          tabs.update(tabs.query({ index: 5 })[0].tab.id, { active: true });
+        windowNew() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.OpenBrowserWindow();
         },
-        // selectTab6
-        tabsSelectTab6() {
-          tabs.update(tabs.query({ index: 6 })[0].tab.id, { active: true });
+        windowNewPrivate() {
+          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+          window.OpenBrowserWindow({private: true});
         },
-        // undoCloseWindow
         windowUndoClose() {
           const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
           window.undoCloseWindow();
