@@ -21,6 +21,12 @@ function devTools(panel) {
     window.gDevToolsBrowser.selectToolCommand(window.gBrowser, panel);
   }
 }
+function doCommand(cmd) {
+  return function() {
+    const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+    window.goDoCommand(cmd);
+  }
+}
 
 class API extends ExtensionAPI {
   getAPI(context) {
@@ -60,25 +66,12 @@ class API extends ExtensionAPI {
         },
 
         // CURRENT PAGE SHORTCUTS
-        pageGoDownAScreen() {
-          // http://searchfox.org/mozilla-central/source/dom/xbl/builtin/mac/platformHTMLBindings.xml
-          // along those lines, as in browser.js:2115
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_scrollPageDown");
-        },
-        pageGoUpAScreen() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_scrollPageUp");
-        },
-
-        pageGoToBottom() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_scrollBottom");
-        },
-        pageGoToTop() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_scrollTop");
-        },
+        // mozilla-central/source/dom/xbl/builtin/mac/platformHTMLBindings.xml
+        // along those lines, as in browser.js:2115
+        pageGoDownAScreen: doCommand("cmd_scrollPageDown"),
+        pageGoUpAScreen: doCommand("cmd_scrollPageUp"),
+        pageGoToBottom: doCommand("cmd_scrollBottom"),
+        pageGoToTop: doCommand("cmd_scrollTop"),
         pageMoveToNextFrame() {
           // EventStateManager.cpp:~2930
           const fm = nsIFocusManager;
@@ -116,41 +109,18 @@ class API extends ExtensionAPI {
         },
 
         // EDITING SHORTCUTS
-        editCopy() {
-          // as noted in editMenuOverlay.xul
-          //   <!-- These key nodes are here only for show. The real bindings
-          //   come from XBL, in platformHTMLBindings.xml. See bugs 57078 and 71779. -->
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_copy");
-        },
-        editCut() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_cut");
-        },
-        editDelete() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_delete");
-        },
-        editPaste() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_paste");
-        },
-        editPasteAsPlainText() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_pasteNoFormatting");
-        },
-        editRedo() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_redo");
-        },
-        editSelectAll() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_selectAll");
-        },
-        editUndo() {
-          const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
-          window.goDoCommand("cmd_undo");
-        },
+        // as noted in editMenuOverlay.xul
+        // <!-- These key nodes are here only for show.
+        //      The real bindings come from XBL, in platformHTMLBindings.xml.
+        //      See bugs 57078 and 71779. -->
+        editCopy: doCommand("cmd_copy"),
+        editCut: doCommand("cmd_cut"),
+        editDelete: doCommand("cmd_delete"),
+        editPaste: doCommand("cmd_paste"),
+        editPasteAsPlainText: doCommand("cmd_pasteNoFormatting"),
+        editRedo: doCommand("cmd_redo"),
+        editSelectAll: doCommand("cmd_selectAll"),
+        editUndo: doCommand("cmd_undo"),
 
         // SEARCH SHORTCUTS
         searchFind() {
