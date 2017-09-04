@@ -29,15 +29,21 @@ window.onload = function() {
           () => { func.call(this, j); }, name + j, timeout);
       }
       continue;
-    }
-    else if (name === "toggleReaderMode") {
+    } else if (name === "toggleReaderMode") {
       func = () => {
-        const url = prompt("URL (complete with scheme) to read.", "https://mozilla.org");
+        const url =
+          prompt("URL (complete with scheme) to read.", "https://mozilla.org");
         if (url) {
-           const tab = browser.tabs.create({'url':url});
-           tab.then(window.setTimeout(() => { browser.keyboard_shortcut[name]() }, 4000));
+          const tab = browser.tabs.create({'url':url});
+          tab.then(window.setTimeout(
+            () => { browser.keyboard_shortcut[name](); }, 4000));
         }
       }
+      createButton(document.body,
+        () => { func(); window.setTimeout(
+          () => { browser.keyboard_shortcut[name](); }, 8000) },
+        name + "AndExit",
+        timeout);
     }
     createButton(document.body, func, name, timeout);
   };
