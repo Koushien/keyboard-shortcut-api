@@ -445,12 +445,6 @@
         "parameters": []
       },
       {
-        "name": "toggleMenuBar",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
         "name": "toggleReaderMode",
         "type": "function",
         "async": true,
