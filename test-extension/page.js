@@ -21,13 +21,12 @@ window.onload = function() {
       category = temp;
       document.body.appendChild(document.createElement("br"));
     }
-    if (category === "edit") timeout = 2000;
-    else if (name === "tabSelect") {
-      for (var j = 1; j < 9; j++) {
-        createButton(document.body,
-                     () => { func.call(this, j) },
-                     name + j,
-                     timeout);
+    if (category === "edit") { timeout = 2000;
+    } else if (name === "tabSelect") {
+      for (let j = 1; j < 9; j++) {
+        createButton(
+          document.body,
+          () => { func.call(this, j); }, name + j, timeout);
       }
       continue;
     }
