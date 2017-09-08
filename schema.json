@@ -122,12 +122,6 @@
         "parameters": []
       },
       {
-        "name": "pageZoomReset",
-        "type": "function",
-        "async": true,
-        "parameters": []
-      },
-      {
         "name": "editCopy",
         "type": "function",
         "async": true,

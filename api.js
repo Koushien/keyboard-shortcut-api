@@ -6,14 +6,13 @@
  *   Ideally, we'd be using the same calls real shortcuts do.
  *
  */
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components
+const {classes: Cc, interfaces: Ci, utils: Cu} = Components
 const nsIWindowMediator = Cc['@mozilla.org/appshell/window-mediator;1']
   .getService(Ci.nsIWindowMediator);
 const nsIFocusManager = Cc["@mozilla.org/focus-manager;1"]
   .getService(Ci.nsIFocusManager);
 const debugging = Cu.import('resource://gre/modules/Console.jsm');
 
-// GENERATORS
 // panels from DevTools.jsm:26
 function devTools(panel) {
   return function() {
@@ -365,9 +364,6 @@ class API extends ExtensionAPI {
           window.BrowserFullScreen();
         },
         // toggleMenuBar
-        toggleMenuBar() {
-          // window.menubar is read-only
-        },
         toggleReaderMode() {
           // browser-sets.inc:46
           // Add a non-null document for readermode to parse
