@@ -72,39 +72,57 @@ window.onload = function() {
   }
   toggleMode();
 
-  // keyboard shortcuts for testing edit commands.
-  const KEYMAP = {
+  // keyboard shortcuts used in insertmode inside textareas.
+  //
+  // for testing edit commands.
+  const IMODE_KEYMAP = {
     'y': browser.keyboard_shortcut.editCopy,
     'x': browser.keyboard_shortcut.editCut,
     'd': browser.keyboard_shortcut.editDelete,
     'p': browser.keyboard_shortcut.editPaste,
     'P': browser.keyboard_shortcut.editPasteAsPlainText,
     'R': browser.keyboard_shortcut.editRedo,
-    'A': browser.keyboard_shortcut.editSelectAll,
     'u': browser.keyboard_shortcut.editUndo,
     'i': toggleMode
   }
 
+  // keymaps used anywhere on the page.
+  // Tho looks like you can't 
+  const PAGEMODE_KEYMAP = {
+    '^': browser.keyboard_shortcut.toggleCaretBrowsing,
+    'A': browser.keyboard_shortcut.editSelectAll,
+  }
+
   // Quick and dirty usage message (.name isn't set properly, so can't
   // introspect)
-  let usagestr = `<br/>
+  let usagestr = `
+    NORMAL MODE shortcuts (within a textarea)<br/>
     'y': browser.keyboard_shortcut.editCopy,<br/>
     'x': browser.keyboard_shortcut.editCut,<br/>
     'd': browser.keyboard_shortcut.editDelete,<br/>
     'p': browser.keyboard_shortcut.editPaste,<br/>
     'P': browser.keyboard_shortcut.editPasteAsPlainText,<br/>
     'R': browser.keyboard_shortcut.editRedo,<br/>
-    'A': browser.keyboard_shortcut.editSelectAll,<br/>
     'u': browser.keyboard_shortcut.editUndo,<br/>
     'i': toggleMode<br/>
+    <br/>
+    INSERT MODE shortcuts (within a textarea)<br/>
+    'Escape': toggleMode<br/>
+    <br/>
+    PAGEMODE shortcuts (NORMAL mode textareas or anywhere on page) <br/>
+    'A': browser.keyboard_shortcut.editSelectAll,<br/>
+    '^': browser.keyboard_shortcut.toggleCaretBrowsing, // Turning it on doesn't let you scroll out of a textarea for some reason.<br/>
   `
 
-  usage.innerHTML = "Keyboard shortcuts (NORMAL mode only): " + usagestr +
-    "<br/>Use Escape to return to NORMAL mode from INSERT.";
+  usage.innerHTML = "Keyboard shortcuts: <br/>" + usagestr
 
   // Really bad VIM-mode parser.
   function dispatch(ke) {
     if (ke.target.type !== "textarea") {
+      if (ke.key in PAGEMODE_KEYMAP) {
+        ke.preventDefault()
+        PAGEMODE_KEYMAP[ke.key]()
+      }
       return
     }
     if (INSERTMODE) {
@@ -118,8 +136,11 @@ window.onload = function() {
       if (ke.key.length === 1) {
         ke.preventDefault()
       }
-      if (ke.key in KEYMAP) {
-        KEYMAP[ke.key]()
+      if (ke.key in IMODE_KEYMAP) {
+        IMODE_KEYMAP[ke.key]()
+      } 
+      else if (ke.key in PAGEMODE_KEYMAP) {
+        PAGEMODE_KEYMAP[ke.key]()
       }
     }
   }
