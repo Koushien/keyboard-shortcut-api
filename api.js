@@ -16,15 +16,18 @@ const debugging = Cu.import('resource://gre/modules/Console.jsm');
 // panels from DevTools.jsm:26
 function devTools(panel) {
   return function() {
-    const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+    const window = getWindow();
     window.gDevToolsBrowser.selectToolCommand(window.gBrowser, panel);
   }
 }
 function doCommand(cmd) {
   return function() {
-    const window = nsIWindowMediator.getMostRecentWindow('navigator:browser');
+    const window = getWindow();
     window.goDoCommand(cmd);
   }
+}
+function getWindow() {
+  return nsIWindowMediator.getMostRecentWindow('navigator:browser');
 }
 
 class API extends ExtensionAPI {
@@ -34,40 +37,33 @@ class API extends ExtensionAPI {
         // NAVIGATION SHORTCUTS
         navigationBack() {
           // browser.js:~1985
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserBack();
         },
         navigationForward() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserForward();
         },
         navigationHome() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserHome();
         },
         navigationOpenFile() {
           // browser.js:2063
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserOpenFileWindow()
         },
         navigationReload() {
           // inferred from browser.js:2036
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserReload();
         },
         navigationReloadOverrideCache() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserReloadSkipCache();
         },
         navigationStop() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserStop();
         },
 
@@ -81,45 +77,37 @@ class API extends ExtensionAPI {
         pageMoveToNextFrame() {
           // EventStateManager.cpp:~2930
           const fm = nsIFocusManager;
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           fm.moveFocus(window, null, fm.MOVEFOCUS_FORWARDDOC, fm.FLAG_BYKEY);
         },
         pageMoveToPreviousFrame() {
           const fm = nsIFocusManager;
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           fm.moveFocus(window, null, fm.MOVEFOCUS_BACKWARDDOC, fm.FLAG_BYKEY);
         },
         pagePrint() {
           // browser.js:~2066 and browser-sets.inc:~32
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
-          window.PrintUtils
-            .printWindow(
-              window.gBrowser.selectedBrowser.outerWindowID,
-              window.gBrowser.selectedBrowser);
+          const window = getWindow();
+          window.PrintUtils.printWindow(
+            window.gBrowser.selectedBrowser.outerWindowID,
+            window.gBrowser.selectedBrowser);
         },
         pageSaveAs() {
           // browser.js:~2070
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.saveBrowser(window.gBrowser.selectedBrowser);
         },
         pageZoomIn() {
           // browser-sets.inc:~85
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.FullZoom.enlarge();
         },
         pageZoomOut() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.FullZoom.reduce();
         },
         pageZoomReset() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.FullZoom.reset();
         },
 
@@ -140,141 +128,116 @@ class API extends ExtensionAPI {
         // SEARCH SHORTCUTS
         searchFind() {
           // browser-sets.inc:~48 and findbar.xml
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gFindBar.onFindCommand();
         },
         searchFindAgain() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gFindBar.onFindAgainCommand(false);
         },
         searchFindPrevious() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gFindBar.onFindAgainCommand(true);
         },
         searchQuickFindLinksOnly() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           // The clear() mimics native shortcut behavior,
           // but doesn't autofill highlighted text which could be useful
           window.gFindBar.clear();
           window.gFindBar.startFind(window.gFindBar.FIND_LINKS);
         },
         searchQuickFind() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gFindBar.clear();
           window.gFindBar.startFind(window.gFindBar.FIND_TYPEAHEAD);
         },
         searchCloseFind() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gFindBar.close();
         },
 
         // WINDOWS & TABS SHORTCUTS
         tabClose() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserCloseTabOrWindow();
         },
         tabMoveLeft() {
           // tabbrowser.xml
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.moveTabBackward();
         },
         tabMoveRight() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.moveTabForward();
         },
         tabMoveToStart() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.moveTabToStart();
         },
         tabMoveToEnd() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.moveTabToEnd();
         },
         tabToggleMute() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.selectedTab.toggleMuteAudio();
         },
         tabNew() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           // Called without event passed in browser-sets.inc:24
           window.BrowserOpenTab();
         },
         tabNext() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.tabContainer.advanceSelectedTab(1, true);
         },
         tabPrevious() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.tabContainer.advanceSelectedTab(-1, true);
         },
         tabUndoClose() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.undoCloseTab();
         },
         tabSelect(tabNumber) {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           // Called without event passed in Tabs.jsm among other places.
           // Alternatively, we can use code directly from tabbrowser.xml.
           window.gBrowser.selectTabAtIndex(tabNumber - 1);
         },
         tabSelectLast() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.selectTabAtIndex(-1);
         },
         windowClose() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserTryToCloseWindow();
         },
         windowNew() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.OpenBrowserWindow();
         },
         windowNewPrivate() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.OpenBrowserWindow({private: true});
         },
         windowUndoClose() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.undoCloseWindow();
         },
 
         // HISTORY
         historySidebar() {
           // browser-sets.inc:131
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.SidebarUI.toggle('viewHistorySidebar');
         },
         historyLibraryWindow() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.PlacesCommandHook.showPlacesOrganizer('History');
         },
         historyClearRecent() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           Cc['@mozilla.org/browser/browserglue;1']
             .getService(Ci.nsIBrowserGlue).sanitize(window);
         },
@@ -282,37 +245,31 @@ class API extends ExtensionAPI {
         // BOOKMARKS
         bookmarksThisPage() {
           // browser-sets.inc:60
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.PlacesCommandHook.bookmarkCurrentPage(
             true, window.PlacesUtils.bookmarksMenuFolderId);
         },
         bookmarksSidebar() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.SidebarUI.toggle('viewBookmarksSidebar');
         },
         bookmarksLibraryWindow() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.PlacesCommandHook.showPlacesOrganizer('UnfiledBookmarks');
         },
 
         // TOOLS
         toolsDownloads() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserDownloadsUI();
         },
         toolsAddons() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserOpenAddonsMgr();
         },
         toolsToggleDeveloper() {
           // devtools-browser.js:267
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           // gDevToolsBrowser.onKeyShortcut not exposed in Nightly 57.0a1
           window.gDevToolsBrowser.toggleToolboxCommand(window.gBrowser);
         },
@@ -324,58 +281,49 @@ class API extends ExtensionAPI {
         toolsNetwork: devTools("netmonitor"),
         // toolsStorage: devTools("storage"); undocumented shortcut (shift+F9)
         toolsDeveloperToolbar() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           // gDevToolsBrowser.getDeveloperToolbar not exposed in Nightly 57.0a1
         },
         toolsResponsiveDesignView() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.ResponsiveUI.ResponsiveUIManager
             .toggle(window, window.gBrowser.selectedTab);
         },
         toolsScratchpad() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.Scratchpad.ScratchpadManager.openScratchpad();
         },
         toolsPageSource() {
           // browser-sets.inc:43 Observes "canViewSource"
           // Do we need to set our own observer?
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserViewSource(window.gBrowser.selectedBrowser);
         },
         toolsBrowserConsole() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.HUDService.openBrowserConsoleOrFocus();
         },
         toolsPageInfo() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserPageInfo();
         },
 
         // MISC SHORTCUTS
         toggleFullScreen() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.BrowserFullScreen();
         },
         // toggleMenuBar
         toggleReaderMode() {
           // browser-sets.inc:46
           // Add a non-null document for readermode to parse
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           window.gBrowser.selectedBrowser.messageManager
             .sendAsyncMessage("Reader:ToggleReaderMode");
         },
         toggleCaretBrowsing() {
           // Adapted directly from browser.xml:1605
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           const mPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefBranch);
           const mStrBundle = Cc["@mozilla.org/intl/stringbundle;1"]
@@ -426,11 +374,9 @@ class API extends ExtensionAPI {
             mPrefs.setBoolPref(kPrefCaretBrowsingOn, !browseWithCaretOn);
           } catch (ex) {
           }
-
         },
         selectLocationBar() {
-          const window = nsIWindowMediator
-            .getMostRecentWindow('navigator:browser');
+          const window = getWindow();
           // it is undocumented on MDN, but is defined in browser.js:2263
           // called in the same manner as below in ext-tabs.js:385
           window.focusAndSelectUrlBar();
