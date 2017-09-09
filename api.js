@@ -322,7 +322,7 @@ class API extends ExtensionAPI {
             .sendAsyncMessage("Reader:ToggleReaderMode");
         },
         toggleCaretBrowsing() {
-          // Directly from browser.xml:1605
+          // Directly from browser.xml:1605, the block handling F7 keypress.
           // We omit the check for defaultPrevented and !isTrusted
           // since we do not pass an event and set mPrefs and
           // mStrBundle inside this block.
