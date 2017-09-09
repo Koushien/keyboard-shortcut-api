@@ -10,7 +10,7 @@ what's provided to regular WebExtensions, prior art in [Vimium][vimium] demonstr
 [limitations][vimium-faq]. These include loss of functionality on protected pages
 requiring non-Vimium motions to navigate away from and Vimium needing to implement its own
 location and findbar. In tandem with Colin Caine's [Keyboard API][keyboard-api], this API
-landing means a user can define their own motions for Firefox's shortcuts and be useable
+landing means a user can define their own motions for Firefox's shortcuts and be usable
 anywhere they normally are. It is our hope this use will go a long way in
 [Vimperator][vimperator] or [Pentadactyl][pentadactyl] successors.
 
