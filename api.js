@@ -2,7 +2,7 @@
  * Keyboard Shortcut/Navigation API
  *
  * Design:
- *   Perform actions possible with keyboard presses in Firefox
+ *   Perform actions possible with keyboard presses in Firefox.
  *   Ideally, we'd be using the same calls real shortcuts do.
  *
  */
@@ -322,7 +322,10 @@ class API extends ExtensionAPI {
             .sendAsyncMessage("Reader:ToggleReaderMode");
         },
         toggleCaretBrowsing() {
-          // Adapted directly from browser.xml:1605
+          // Directly from browser.xml:1605
+          // We omit the check for defaultPrevented and !isTrusted
+          // since we do not pass an event and set mPrefs and
+          // mStrBundle inside this block.
           const window = getWindow();
           const mPrefs = Cc["@mozilla.org/preferences-service;1"]
             .getService(Ci.nsIPrefBranch);
