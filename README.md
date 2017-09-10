@@ -2,8 +2,8 @@
 
 This repo contains a prototype API implemented as a WebExtension Experiment for Firefox
 that aims to address [Bug 1215061 - Better keyboard shortcut support][bug-1215061] as
-mentioned in [comment 44][bug-1215061-c44]. This API triggers Firefox's native shortcuts
-programmatically.
+mentioned in [comment 44][bug-1215061-c44]. This API triggers Firefox's [native
+shortcuts][shortcuts] programmatically.
 
 While extensions such as [Vimium-FF][vimium-ff] and [Saka Key][saka-key] make do only with
 what's provided to regular WebExtensions, prior art in [Vimium][vimium] demonstrates
@@ -43,3 +43,4 @@ escaping from browser chrome. Do we have approval for this?
 [vimperator]: https://github.com/vimperator/vimperator-labs/
 [pentadactyl]: https://github.com/5digits/dactyl
 [saka-key]: https://addons.mozilla.org/firefox/addon/saka-key/
+[shortcuts]: https://support.mozilla.org/kb/keyboard-shortcuts-perform-firefox-tasks-quickly
