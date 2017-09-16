@@ -309,11 +309,20 @@ class API extends ExtensionAPI {
         },
 
         // MISC SHORTCUTS
+        isFullScreen() {
+          const window = getWindow();
+          return window.fullScreen;
+        },
         toggleFullScreen() {
           const window = getWindow();
           window.BrowserFullScreen();
         },
         // toggleMenuBar
+        isReaderMode() {
+          // e.g., ReaderParent.jsm:77
+          const window = getWindow();
+          return window.gBrowser.currentURI.spec.startsWith("about:reader");
+        },
         toggleReaderMode() {
           // browser-sets.inc:46
           // We don't have an event to pass directly
@@ -322,6 +331,12 @@ class API extends ExtensionAPI {
           const window = getWindow();
           window.gBrowser.selectedBrowser.messageManager
             .sendAsyncMessage("Reader:ToggleReaderMode");
+        },
+        isCaretBrowsing() {
+          const mPrefs = Cc["@mozilla.org/preferences-service;1"]
+            .getService(Ci.nsIPrefBranch);
+          const kPrefCaretBrowsingOn = "accessibility.browsewithcaret";
+          return mPrefs.getBoolPref(kPrefCaretBrowsingOn, false);
         },
         toggleCaretBrowsing() {
           // Directly from browser.xml:1605, the block handling F7 keypress.

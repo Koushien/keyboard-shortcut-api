@@ -455,6 +455,24 @@
         "type": "function",
         "async": true,
         "parameters": []
+      },
+      {
+        "name": "isFullScreen",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "isReaderMode",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "isCaretBrowsing",
+        "type": "function",
+        "async": true,
+        "parameters": []
       }
     ]
   }
