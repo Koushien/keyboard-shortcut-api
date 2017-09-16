@@ -400,6 +400,11 @@ class API extends ExtensionAPI {
           // it is undocumented on MDN, but is defined in browser.js:2263
           // called in the same manner as below in ext-tabs.js:385
           window.focusAndSelectUrlBar();
+        },
+        focusContent() {
+          const fm = nsIFocusManager;
+          const window = getWindow();
+          fm.moveFocus(window, null, fm.MOVEFOCUS_LASTDOC, 0);
         }
       }
     };

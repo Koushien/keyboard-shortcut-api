@@ -457,6 +457,12 @@
         "parameters": []
       },
       {
+        "name": "focusContent",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
         "name": "isFullScreen",
         "type": "function",
         "async": true,

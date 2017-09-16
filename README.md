@@ -31,7 +31,8 @@ source/toolkit/content/widgets/browser.xml. Is there any intent to encapsulate t
 not, is the verbatim reuse in the API acceptable?
 - If at all, how would you like tests to work?
 - If we can manage, we intend to implement a new shortcut here that focuses tab content,
-escaping from browser chrome. Do we have approval for this?
+escaping from browser chrome. Do we have approval for this? A tentative implementation has
+been added, but hasn't been determined to be robust.
 
 [bug-1215061]: https://bugzilla.mozilla.org/show_bug.cgi?id=1215061
 [bug-1215061-c44]: https://bugzilla.mozilla.org/show_bug.cgi?id=1215061#c44
