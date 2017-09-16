@@ -87,7 +87,7 @@ window.onload = function() {
   }
 
   // keymaps used anywhere on the page.
-  // Tho looks like you can't 
+  // Tho looks like you can't
   const PAGEMODE_KEYMAP = {
     '^': browser.keyboard_shortcut.toggleCaretBrowsing,
     'A': browser.keyboard_shortcut.editSelectAll,
@@ -138,7 +138,7 @@ window.onload = function() {
       }
       if (ke.key in IMODE_KEYMAP) {
         IMODE_KEYMAP[ke.key]()
-      } 
+      }
       else if (ke.key in PAGEMODE_KEYMAP) {
         PAGEMODE_KEYMAP[ke.key]()
       }
