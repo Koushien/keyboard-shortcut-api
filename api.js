@@ -316,7 +316,9 @@ class API extends ExtensionAPI {
         // toggleMenuBar
         toggleReaderMode() {
           // browser-sets.inc:46
-          // Add a non-null document for readermode to parse
+          // We don't have an event to pass directly
+          // to ReaderParent.toggleReaderMode() so we
+          // just use its short implementation here.
           const window = getWindow();
           window.gBrowser.selectedBrowser.messageManager
             .sendAsyncMessage("Reader:ToggleReaderMode");
