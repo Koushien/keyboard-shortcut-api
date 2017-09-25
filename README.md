@@ -30,6 +30,11 @@ our API returns.
 source/toolkit/content/widgets/browser.xml. Is there any intent to encapsulate this? If
 not, is the verbatim reuse in the API acceptable?
 - If at all, how would you like tests to work?
+- As of September 24 2017, we notice that gDevToolsBrowser contains a function
+onKeyShortcut() that is not exposed. Our API could be made more concise using this call.
+- Related, gDevToolsBrowser.getDeveloperToolbar() seems to be the best way to get the
+developer toolbar but is also not exposed. We currently have no implementation to toggle
+the toolbar.
 - Though not shortcuts, we've implemented functions that check if the current page is in
 fullscreen, reader mode or in caret browsing.
 - If we can manage, we intend to implement a new shortcut here that focuses tab content,

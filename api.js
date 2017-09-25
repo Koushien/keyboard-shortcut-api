@@ -270,7 +270,7 @@ class API extends ExtensionAPI {
         toolsToggleDeveloper() {
           // devtools-browser.js:267
           const window = getWindow();
-          // gDevToolsBrowser.onKeyShortcut not exposed in Nightly 57.0a1
+          // gDevToolsBrowser.onKeyShortcut not exposed in Nightly 58.0a1
           window.gDevToolsBrowser.toggleToolboxCommand(window.gBrowser);
         },
         toolsWebConsole: devTools("webconsole"),
@@ -282,7 +282,7 @@ class API extends ExtensionAPI {
         // toolsStorage: devTools("storage"); undocumented shortcut (shift+F9)
         toolsDeveloperToolbar() {
           const window = getWindow();
-          // gDevToolsBrowser.getDeveloperToolbar not exposed in Nightly 57.0a1
+          // gDevToolsBrowser.getDeveloperToolbar not exposed in Nightly 58.0a1
         },
         toolsResponsiveDesignView() {
           const window = getWindow();
